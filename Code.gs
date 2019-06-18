@@ -6,6 +6,16 @@
 // This was further modified to allow for changing the peakness (g) value per Vose's Modified Beta Pert https://www.vosesoftware.com/riskwiki/ModifiedPERTdistribution.php
 // Thank you David Vose for taking it for a spin and correcting my density function for visualization!
 
+// Example use
+// Outcome: Call a random value that follows the beta distribution within user provided min,max,most likely
+// BW2 is a cell containing the "minimum" estimate e.g. $1
+// BW5 is a cell containing the "maximum" estimate e.g. $1,000,000
+// BW3 is a cell containing the "most likely" estimate e.g. $750,000
+// BW6 is a cell containing the "range" or max minus min e.g. $250,000
+// Place in a cell "=betadist(rand(),INDEX(bpert(BW2,BW5,BW3,4),1),INDEX(bpert(BW2,BW5,BW3,4),2))*BW6+BW2"
+// The in-cell function creates a beta distribution using the 1st and 2nd output of bpert() as the alpha1 and alpha2 beta parameters.
+// The in-cell function ends with "...*BW6+BW2" in order to output a random sample instead of a probability. Remove this tail to generate a probability.
+
 function bpert(min, max, most_likely, peak) {
   mean = ( min + max + peak * most_likely ) / ( peak + 2 );
   if( mean == most_likely ){
